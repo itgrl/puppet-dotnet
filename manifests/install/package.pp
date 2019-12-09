@@ -1,16 +1,16 @@
 #
 define dotnet::install::package(
-  $ensure = 'present',
-  $version = '',
-  $package_dir = ''
+  DotNet::Version     $version,
+  DotNet::Ensure      $ensure      = 'present',
+  DotNet::Package_Dir $package_dir = '',
 ) {
-
-  include dotnet::params
-
-  $url = $dotnet::params::version[$version]['url']
-  $exe = $dotnet::params::version[$version]['exe']
-  $key = $dotnet::params::version[$version]['key']
-
+  include dotnet::versions
+  $key = sprintf(
+    'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{%s}',
+    $dotnet::versions::list[$version]['key']
+  )
+  $url = $dotnet::versions::list[$version]['url']
+  $exe = $url.regsubst(/\A.*\/([^\/]+)\z/, '\1')
 
   if "x${package_dir}x" == 'xx' {
     $source_dir = 'C:\Windows\Temp'

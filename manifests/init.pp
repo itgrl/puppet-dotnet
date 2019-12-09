@@ -8,8 +8,8 @@
 #
 # === Requirements/Dependencies
 #
-# Currently reequires the puppetlabs/stdlib module on the Puppet Forge in
-# order to validate much of the the provided configuration.
+# Currently reequires the puppetlabs/stdlib module in order
+# to validate much of the the provided configuration.
 #
 # === Parameters
 #
@@ -31,51 +31,33 @@
 #    }
 #
 define dotnet(
-  Pattern[/^(3.5|4\.0|4\.5(\.\d)?)$/] $version,
-  Enum['present', 'absent'] $ensure = 'present',
-  $package_dir                      = ''
+  DotNet::Ensure      $ensure      = 'present',
+  DotNet::Package_Dir $package_dir = '',
+  DotNet::Version     $version     = $name,
 ) {
-
-  include dotnet::params
-
-  case $version {
-    '3.5': {
-      case $::operatingsystemversion {
-        /^Windows.Server.(2008|2012).?(R2)?.*/: { $type = 'feature' }
-        /^Windows (XP|Vista|7|8|8.1).*/: { $type = 'package' }
-        default: { $type = 'err' err("dotnet ${version} is not support on this version of windows") }
+  include dotnet::versions
+  case $dotnet::versions::list[$version] {
+    Dotnet::Feature: {
+      dotnet::install::feature { "dotnet-feature-${version}":
+        ensure  => $ensure,
+        version => $version,
       }
     }
-    '4.0': {
-      case $::operatingsystemversion {
-        /^Windows.(Server)?.?(2003|2008|2012|XP|Vista|7|8.*).?(R2)?.*/: { $type = 'package' }
-        default: { $type = 'err' err("dotnet ${version} is not support on this version of windows") }
-      }
-    }
-    /4\.5(\.\d)?/: {
-      case $::operatingsystemversion {
-        /^Windows.(Server)?.?(2008|2012|Vista|7|8.*).?(R2)?.*/: { $type = 'package' }
-        default: { $type = 'err' err("dotnet ${version} is not support on this version of windows") }
+    Dotnet::Package: {
+      dotnet::install::package { "dotnet-package-${version}":
+        ensure      => $ensure,
+        package_dir => $package_dir,
+        version     => $version,
       }
     }
     default: {
-      $type = 'err'
-      err("dotnet does not have a version: ${version}")
+      err(
+        sprintf(
+          'dotnet %s is not supported on %s %s',
+          $facts['os']['family'],
+          $facts['os']['release']['major']
+        )
+      )
     }
-  }
-
-  if $type == 'feature' {
-    dotnet::install::feature { "dotnet-feature-${version}":
-      ensure  => $ensure,
-      version => $version,
-    }
-  } elsif $type == 'package' {
-    dotnet::install::package { "dotnet-package-${version}":
-      ensure      => $ensure,
-      version     => $version,
-      package_dir => $package_dir,
-    }
-  } else {
-
   }
 }

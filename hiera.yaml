@@ -1,0 +1,15 @@
+---
+
+# Hiera 5 Module configuration file
+
+defaults:
+  data_hash: 'yaml_data'
+  datadir:   'data'
+
+hierarchy:
+  - name: 'O/S Major Release'
+    path: '%{facts.os.family}.%{facts.os.release.major}.yaml'
+  - name: 'O/S'
+    path: '%{facts.os.family}.yaml'
+
+version: 5
