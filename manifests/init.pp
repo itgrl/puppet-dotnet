@@ -33,7 +33,7 @@
 define dotnet(
   DotNet::Ensure      $ensure      = 'present',
   DotNet::Package_Dir $package_dir = '',
-  DotNet::Version     $version     = $name,
+  String              $version     = $name,
 ) {
   include dotnet::versions
   case $dotnet::versions::list[$version] {

@@ -23,6 +23,7 @@
 ## Overview
 
 Puppet module for installing and managing [Microsoft .NET framework](http://www.microsoft.com/net).
+Support added for installing and managing [Microsoft .NET Core](https://dotnet.microsoft.com/). 
 
 [![Build Status](https://travis-ci.org/voxpupuli/puppet-dotnet.svg?branch=master)](https://travis-ci.org/voxpupuli/puppet-dotnet)
 [![Puppet Forge](http://img.shields.io/puppetforge/v/puppet/dotnet.svg)](https://forge.puppet.com/puppet/dotnet)
@@ -38,6 +39,7 @@ systems. It support side-by-side installs where appropriate.
 ### What dotnet affects
 
 * Installs the .net framework package or the windows server role.
+* Installs the .net core package on the windows node
 
 ### Beginning with dotnet
 
@@ -72,6 +74,18 @@ Ensures the state of .net on the system. Present or Absent.
 ##### `version`
 
 The version of .net that you want to be managed by this definition.
+
+For new releases to the .NET versions, you can add the `dotnet::versions` key to your hiera data with the new version information.
+The following would add management support for ASP.NET Hosted Core Runtime version 3.1.4.
+
+```
+dotnet::versions:
+   'ahcr3.1.4':
+     key: '12D2F58C-2FBB-3D8F-B27F-B53E83D0ABB9'
+     url: 'https://download.visualstudio.microsoft.com/download/pr/5bed16f2-fd1a-4027-bee3-3d6a1b5844cc/dd22ca2820fadb57fd5378e1763d27cd/dotnet-hosting-3.1.4-win.exe'
+```
+
+The key is the registry key that would be able to track whether the package is already installed or not.
 
 ##### `package_dir`
 

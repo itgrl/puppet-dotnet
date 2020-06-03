@@ -9,6 +9,10 @@ define dotnet::install::package(
     'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{%s}',
     $dotnet::versions::list[$version]['key']
   )
+  $key64 = sprintf(
+    'HKLM:\SOFTWARE\WOW6432Node\Microsoft\Windows\CurrentVersion\Uninstall\{%s}',
+     $dotnet::versions::list[$version]['key']
+  )
   $url = $dotnet::versions::list[$version]['url']
   $exe = $url.regsubst(/\A.*\/([^\/]+)\z/, '\1')
 
@@ -33,14 +37,14 @@ define dotnet::install::package(
       command   => "& ${source_dir}\\${exe} /q /norestart",
       provider  => powershell,
       logoutput => true,
-      unless    => "if ((Get-Item -LiteralPath \'${key}\' -ErrorAction SilentlyContinue).GetValue(\'DisplayVersion\')) { exit 0 }",
+      unless    => [ "if ((Get-Item -LiteralPath \'${key}\' -ErrorAction SilentlyContinue).GetValue(\'DisplayVersion\')) { exit 0 }", "if ((Get-Item -LiteralPath \'${key64}\' -ErrorAction SilentlyContinue).GetValue(\'DisplayVersion\')) { exit 0 }" ],
     }
   } else {
     exec { "uninstall-dotnet-${version}":
       command   => "& ${source_dir}\\${exe} /x /q /norestart",
       provider  => powershell,
       logoutput => true,
-      unless    => "if ((Get-Item -LiteralPath \'${key}\' -ErrorAction SilentlyContinue).GetValue(\'DisplayVersion\')) { exit 1 }",
+      unless    => [ "if ((Get-Item -LiteralPath \'${key}\' -ErrorAction SilentlyContinue).GetValue(\'DisplayVersion\')) { exit 0 }", "if ((Get-Item -LiteralPath \'${key64}\' -ErrorAction SilentlyContinue).GetValue(\'DisplayVersion\')) { exit 0 }" ],
     }
   }
 

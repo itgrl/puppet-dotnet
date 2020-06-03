@@ -27,3 +27,20 @@ dotnet::versions:
   'v2.2.8':
     key: '8A352243-B26C-4A83-9E2C-2575541C7430'
     url: 'https://download.visualstudio.microsoft.com/download/pr/ba001109-03c6-45ef-832c-c4dbfdb36e00/e3413f9e47e13f1e4b1b9cf2998bc613/dotnet-hosting-2.2.8-win.exe'
+  # Hosted Core Runtime versions
+  # The .NET Core Runtime contains just the components needed to run a console app. Typically, you'd also install either the ASP.NET Core Runtime or .NET Core Desktop Runtime.
+  'hcr3.1.4':
+    key: '4951BF54-3ADE-46FD-A714-B3F14B73BF53'
+    url: 'https://download.visualstudio.microsoft.com/download/pr/03b8b6cb-c80c-43ea-9136-1156e839bb52/31c13e5a5b028a3c721a50df8f02caf0/dotnet-runtime-3.1.4-win-x86.exe'
+  # SDK versions
+  'sdk3.1.300'
+    key: 'ff69aff7-1dae-4e21-ac6c-51277ddba17d'
+    url: 'https://download.visualstudio.microsoft.com/download/pr/d6409713-907c-4871-8274-e81a18f55027/aa67b682cc339eec31ca9e5383f16f75/dotnet-sdk-3.1.300-win-x86.exe'
+  # ASP.Net Hosted Core Runtime versions
+  # ASP.NET Core Hosting Bundle contains everything you need to run existing web/server apps. The bundle includes the .NET Core runtime, the ASP.NET Core runtime, and if installed on a machine with IIS it will also add the ASP.NET Core IIS Module. If you only want the .NET Core or ASP.NET Core runtime, you'll find them in .NET Core 3.1 Downloads.
+  'ahcr3.1.4':
+    key: '12D2F58C-2FBB-3D8F-B27F-B53E83D0ABB9'
+    url: 'https://download.visualstudio.microsoft.com/download/pr/5bed16f2-fd1a-4027-bee3-3d6a1b5844cc/dd22ca2820fadb57fd5378e1763d27cd/dotnet-hosting-3.1.4-win.exe'
+
+
+
