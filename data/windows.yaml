@@ -33,7 +33,7 @@ dotnet::versions:
     key: '4951BF54-3ADE-46FD-A714-B3F14B73BF53'
     url: 'https://download.visualstudio.microsoft.com/download/pr/03b8b6cb-c80c-43ea-9136-1156e839bb52/31c13e5a5b028a3c721a50df8f02caf0/dotnet-runtime-3.1.4-win-x86.exe'
   # SDK versions
-  'sdk3.1.300'
+  'sdk3.1.300':
     key: 'ff69aff7-1dae-4e21-ac6c-51277ddba17d'
     url: 'https://download.visualstudio.microsoft.com/download/pr/d6409713-907c-4871-8274-e81a18f55027/aa67b682cc339eec31ca9e5383f16f75/dotnet-sdk-3.1.300-win-x86.exe'
   # ASP.Net Hosted Core Runtime versions
