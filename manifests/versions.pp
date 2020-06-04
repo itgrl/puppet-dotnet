@@ -8,5 +8,5 @@
 # It sets variables according to platform
 #
 class dotnet::versions {
-  $list = lookup('dotnet::versions', DotNet::Hash, 'deep')
+  $list = lookup('dotnet::versions', Hash, 'deep')
 }

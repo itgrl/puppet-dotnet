@@ -1,6 +1,6 @@
 #
 define dotnet::install::package(
-  DotNet::Version     $version,
+  String              $version,
   DotNet::Ensure      $ensure      = 'present',
   DotNet::Package_Dir $package_dir = '',
 ) {

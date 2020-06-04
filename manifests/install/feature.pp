@@ -1,6 +1,6 @@
 #
 define dotnet::install::feature(
-  DotNet::Version $version,
+  String $version,
   DotNet::Ensure  $ensure = 'present',
 ) {
 
